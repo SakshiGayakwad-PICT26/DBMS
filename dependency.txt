@@ -1,0 +1,53 @@
+<dependency> <groupId>org.mongodb</groupId> <artifactId>mongo-java-driver</artifactId> <version>3.12.0</version> </dependency> package mongoJava; import javax.swing.text.Document; import com.mongodb.MongoClient; import com.mongodb.client.MongoCollection; import com.mongodb.client.MongoCursor; import com.mongodb.client.MongoDatabase; public class javamongo {   public static void main(String[] args) {         MongoClient mongoClient = new MongoClient( "localhost" , 27017 );         System.out.println("Created Mongo Connection successfully");         MongoDatabase db = mongoClient.getDatabase("mongodbjava");         System.out.println("Get database is successful");                   MongoCursor<String> dbsCursor = mongoClient.listDatabaseNames().iterator();          while(dbsCursor.hasNext()) {          System.out.println(dbsCursor.next());          }                            MongoCollection<org.bson.Document> collection= db.getCollection("javaprogram");          org.bson.Document doc =(org.bson.Document) new org.bson.Document("name","hello world");          collection.insertOne(doc);          System.out.println("Insertion is completed");          MongoCursor<String> dbsCursord = mongoClient.listDatabaseNames().iterator();          while(dbsCursord.hasNext()) {          System.out.println(dbsCursord.next());                   }   } }
+
+
+
+
+Here's a step-by-step guide to installing MongoDB on Ubuntu through the terminal.
+
+Step 1: Import the MongoDB GPG Key
+First, import the public key used by the package management system.
+
+bash
+Copy code
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+Step 2: Create a MongoDB Source List
+Create a list file for MongoDB. Here, we'll be using the latest MongoDB version available.
+
+bash
+Copy code
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+Step 3: Update the Packages List
+Update the local package database to include the new MongoDB packages.
+
+bash
+Copy code
+sudo apt update
+Step 4: Install MongoDB
+Now, install the MongoDB packages.
+
+bash
+Copy code
+sudo apt install -y mongodb-org
+Step 5: Start the MongoDB Service
+After installation, start MongoDB and enable it to start on boot.
+
+bash
+Copy code
+sudo systemctl start mongod
+sudo systemctl enable mongod
+Step 6: Verify the Installation
+Check the status to ensure MongoDB is running.
+
+bash
+Copy code
+sudo systemctl status mongod
+You should see a message indicating that MongoDB is "active (running)."
+
+Step 7: Access MongoDB Shell
+To access the MongoDB shell, use:
+
+bash
+Copy code
+mongosh
+This will open the MongoDB shell, where you can start running MongoDB commands.
